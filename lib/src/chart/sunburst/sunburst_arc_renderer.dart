@@ -431,22 +431,20 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
 
   // Records the nodes to expand beyond initial display level.
   void expandNode(TreeNode<D> node) {
-    if (node == null) {
-      _nodeToExpand.clear();
-    } else if (node.hasChildren) {
-      // Collapse rings up to the clicked expanded node.
-      if (node.children.any((e) => _nodeToExpand.contains(e))) {
-        node.visit((e) {
-          if (node != e) {
-            _nodeToExpand.remove(e);
-          }
-        });
-      } else {
-        // Expand clicked node by one level.
-        _nodeToExpand.add(node);
-        _nodeToExpand.addAll(node.children);
-      }
+    if (node.hasChildren) {
+    // Collapse rings up to the clicked expanded node.
+    if (node.children.any((e) => _nodeToExpand.contains(e))) {
+      node.visit((e) {
+        if (node != e) {
+          _nodeToExpand.remove(e);
+        }
+      });
+    } else {
+      // Expand clicked node by one level.
+      _nodeToExpand.add(node);
+      _nodeToExpand.addAll(node.children);
     }
+  }
   }
 
   /// Assigns one color pallet for each subtree from the children of the root

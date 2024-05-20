@@ -3,21 +3,15 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///Users/alfaiz/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-68.0.0",
+      "rootUri": "file:///Users/alfaiz/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-67.0.0",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
-    },
-    {
-      "name": "_macros",
-      "rootUri": "file:///Users/alfaiz/SDK/flutter/bin/cache/dart-sdk/pkg/_macros",
-      "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.0"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///Users/alfaiz/.pub-cache/hosted/pub.dev/analyzer-6.5.0",
+      "rootUri": "file:///Users/alfaiz/.pub-cache/hosted/pub.dev/analyzer-6.4.1",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.0"
     },
     {
       "name": "args",
@@ -135,9 +129,9 @@
     },
     {
       "name": "intl",
-      "rootUri": "file:///Users/alfaiz/.pub-cache/hosted/pub.dev/intl-0.19.0",
+      "rootUri": "file:///Users/alfaiz/.pub-cache/hosted/pub.dev/intl-0.18.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "io",
@@ -156,12 +150,6 @@
       "rootUri": "file:///Users/alfaiz/.pub-cache/hosted/pub.dev/logging-1.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.19"
-    },
-    {
-      "name": "macros",
-      "rootUri": "file:///Users/alfaiz/.pub-cache/hosted/pub.dev/macros-0.1.0-main.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.4"
     },
     {
       "name": "matcher",
@@ -368,10 +356,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2024-05-20T10:06:25.189340Z",
+  "generated": "2024-05-20T10:27:54.489814Z",
   "generator": "pub",
-  "generatorVersion": "3.4.0",
-  "flutterRoot": "file:///Users/alfaiz/SDK/flutter",
-  "flutterVersion": "3.22.0",
-  "pubCache": "file:///Users/alfaiz/.pub-cache"
+  "generatorVersion": "3.3.4"
 }
