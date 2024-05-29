@@ -26,7 +26,7 @@ abstract class ChartCanvas {
 
   /// Set the name of the view doing the rendering for debugging purposes,
   /// or null when we believe rendering is complete.
-  set drawingView(String viewName);
+  set drawingView(String? viewName);
 
   /// Renders a sector of a circle, with an optional hole in the center.
   ///
@@ -43,7 +43,17 @@ abstract class ChartCanvas {
   /// [strokeWidthPx] Stroke width of the arc and radius lines.
   void drawCircleSector(Point center, double radius, double innerRadius,
       double startAngle, double endAngle,
-      {Color fill, Color stroke, double strokeWidthPx});
+      {Color? fill, Color? stroke, double? strokeWidthPx});
+
+  /// Draws a smooth link from source to target.
+  ///
+  /// [sourceUpper] The location of the upper link at the source node.
+  /// [sourceLower] The location of the lower link at the source node.
+  /// [targetUpper] The location of the upper link at the target node.
+  /// [targetLower] The location of the lower link at the target node.
+  /// [fill] The fill color for the link.
+  /// [orientation] Orientation enum of the link, vertical or horizontal.
+  void drawLink(Link link, LinkOrientation orientation, Color fill);
 
   /// Renders a simple line.
   ///
@@ -53,14 +63,13 @@ abstract class ChartCanvas {
   /// pattern will be repeated to derive an even number of values. "1,2,3" is
   /// equivalent to "1,2,3,1,2,3."
   void drawLine(
-      {List<Point> points,
-      Rectangle<num> clipBounds,
-      Color fill,
-      Color stroke,
-      bool smoothLine,
-      bool roundEndCaps,
-      double strokeWidthPx,
-      List<int> dashPattern});
+      {required List<Point> points,
+      Rectangle<num>? clipBounds,
+      Color? fill,
+      Color? stroke,
+      bool? roundEndCaps,
+      double? strokeWidthPx,
+      List<int>? dashPattern});
 
   /// Renders a pie, with an optional hole in the center.
   void drawPie(CanvasPie canvasPie);
@@ -76,12 +85,15 @@ abstract class ChartCanvas {
   /// [stroke] and [strokeWidthPx] configure the color and thickness of the
   /// outer edge of the point. Both must be provided together for a line to
   /// appear.
+  ///
+  /// [blendMode] Blend mode to be used when drawing this point on canvas.
   void drawPoint(
-      {Point point,
-      double radius,
-      Color fill,
-      Color stroke,
-      double strokeWidthPx});
+      {required Point point,
+      required double radius,
+      Color? fill,
+      Color? stroke,
+      double? strokeWidthPx,
+      BlendMode? blendMode});
 
   /// Renders a polygon shape described by a set of points.
   ///
@@ -94,12 +106,11 @@ abstract class ChartCanvas {
   /// [stroke] and [strokeWidthPx] configure the color and thickness of the
   /// edges of the polygon. Both must be provided together for a line to appear.
   void drawPolygon(
-      {List<Point> points,
-      Rectangle<num> clipBounds,
-      Color fill,
-      Color stroke,
-      double strokeWidthPx,
-      bool smoothLine});
+      {required List<Point> points,
+      Rectangle<num>? clipBounds,
+      Color? fill,
+      Color? stroke,
+      double? strokeWidthPx});
 
   /// Renders a simple rectangle.
   ///
@@ -108,20 +119,24 @@ abstract class ChartCanvas {
   /// platform) exceeding the draw area will apply a gradient to transparent
   /// with anything exceeding the x pixels to be transparent.
   void drawRect(Rectangle<num> bounds,
-      {Color fill,
-      Color stroke,
-      double strokeWidthPx,
-      Rectangle<num> drawAreaBounds});
+      {Color? fill,
+      Color? stroke,
+      double? strokeWidthPx,
+      Rectangle<num>? drawAreaBounds});
 
   /// Renders a rounded rectangle.
   void drawRRect(Rectangle<num> bounds,
-      {Color fill,
-      Color stroke,
-      num radius,
-      bool roundTopLeft,
-      bool roundTopRight,
-      bool roundBottomLeft,
-      bool roundBottomRight});
+      {Color? fill,
+      Color? stroke,
+      Color? patternColor,
+      FillPatternType? fillPattern,
+      double? patternStrokeWidthPx,
+      double? strokeWidthPx,
+      num? radius,
+      bool roundTopLeft = false,
+      bool roundTopRight = false,
+      bool roundBottomLeft = false,
+      bool roundBottomRight = false});
 
   /// Renders a stack of bars, rounding the last bar in the stack.
   ///
@@ -133,7 +148,7 @@ abstract class ChartCanvas {
   /// platform) exceeding the draw area will apply a gradient to transparent
   /// with anything exceeding the x pixels to be transparent.
   void drawBarStack(CanvasBarStack canvasBarStack,
-      {Rectangle<num> drawAreaBounds});
+      {Rectangle<num>? drawAreaBounds});
 
   void drawText(TextElement textElement, int offsetX, int offsetY,
       {double rotation = 0.0});
@@ -153,7 +168,7 @@ Color getAnimatedColor(Color previous, Color target, double animationPercent) {
   var b = (((target.b - previous.b) * animationPercent) + previous.b).round();
   var a = (((target.a - previous.a) * animationPercent) + previous.a).round();
 
-  return new Color(a: a, r: r, g: g, b: b);
+  return Color(a: a, r: r, g: g, b: b);
 }
 
 /// Defines the pattern for a color fill.
@@ -163,3 +178,56 @@ Color getAnimatedColor(Color previous, Color target, double animationPercent) {
 /// * [solid] defines a simple bar filled with the fill color. This is the
 ///   default pattern for bars.
 enum FillPatternType { forwardHatch, solid }
+
+/// Defines the blend modes to use for drawing on canvas.
+enum BlendMode {
+  color,
+  colorBurn,
+  colorDodge,
+  darken,
+  defaultMode,
+  difference,
+  exclusion,
+  hardLight,
+  hue,
+  lighten,
+  luminosity,
+  multiply,
+  overlay,
+  saturation,
+  screen,
+  softLight,
+  copy,
+  destinationAtop,
+  destinationIn,
+  destinationOut,
+  destinationOver,
+  lighter,
+  sourceAtop,
+  sourceIn,
+  sourceOut,
+  sourceOver,
+  xor
+}
+
+/// Determines the orientation of a drawn link.
+///
+/// * [horizontal] Link control points are averaged across the x-axis.
+/// * [vertical] Link control points are averaged across the y-axis.
+enum LinkOrientation { horizontal, vertical }
+
+/// A link as defined by the two sets of points that determine the bezier
+/// curves of the link.
+///
+/// [sourceUpper] The location of the upper link at the source node.
+/// [sourceLower] The location of the lower link at the source node.
+/// [targetUpper] The location of the upper link at the target node.
+/// [targetLower] The location of the lower link at the target node.
+class Link {
+  final Point sourceUpper;
+  final Point sourceLower;
+  final Point targetUpper;
+  final Point targetLower;
+
+  Link(this.sourceUpper, this.sourceLower, this.targetUpper, this.targetLower);
+}
